@@ -85,7 +85,7 @@ html,body,[class*="css"]{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont
 
 /* Filter labels */
 [data-testid="stSidebar"] label{
-  color:rgba(255,255,255,0.60) !important;
+  color:rgba(255,255,255,0.70) !important;
   font-size:.68rem !important;text-transform:uppercase;letter-spacing:.08em;
   font-weight:700 !important;
 }
@@ -108,36 +108,34 @@ html,body,[class*="css"]{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont
   border-radius:8px !important;
   box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
 }
-/* Multiselect tags: blue pill on white bg */
+/* ── Multiselect tags: CRITICAL RED (#E02424) ── */
 [data-testid="stSidebar"] [data-baseweb="tag"]{
-  background:#1A56DB !important;
+  background:#E02424 !important;
   border-radius:6px !important;
   border:none !important;
 }
-[data-testid="stSidebar"] [data-baseweb="tag"] span{color:#ffffff !important;font-weight:600 !important;}
-[data-testid="stSidebar"] [data-baseweb="tag"] svg{color:#ffffff !important;opacity:.85;}
-/* Remove the red default tag colour Streamlit applies */
-[data-testid="stSidebar"] [data-baseweb="tag"][style*="rgb(255"]{
-  background:#1A56DB !important;
-}
+[data-testid="stSidebar"] [data-baseweb="tag"] span{color:#ffffff !important;font-weight:700 !important;}
+[data-testid="stSidebar"] [data-baseweb="tag"] svg{color:#ffffff !important;opacity:.9;}
+[data-testid="stSidebar"] [data-baseweb="tag"][style*="rgb"]{background:#E02424 !important;}
 
-/* ── Slider: white track accent, white labels ── */
+/* ── Slider: RED fill (#E02424) matching Critical colour ── */
 [data-testid="stSidebar"] .stSlider > div{padding:0 !important;}
 [data-testid="stSidebar"] .stSlider [data-testid="stTickBarMin"],
 [data-testid="stSidebar"] .stSlider [data-testid="stTickBarMax"],
 [data-testid="stSidebar"] .stSlider [data-testid="stSliderThumbValue"]{
-  color:rgba(255,255,255,0.85) !important;font-size:.72rem !important;
+  color:rgba(255,255,255,0.90) !important;font-size:.72rem !important;font-weight:600 !important;
 }
-/* Slider track fill: white */
+/* Slider thumb: red circle */
 [data-testid="stSidebar"] [data-testid="stSlider"] div[role="slider"]{
-  background:#ffffff !important;
-  box-shadow:0 0 0 3px rgba(255,255,255,.35) !important;
+  background:#E02424 !important;
+  box-shadow:0 0 0 4px rgba(224,36,36,.35) !important;
 }
+/* Slider active track fill: red */
 [data-testid="stSidebar"] .stSlider > div > div > div{
-  background:rgba(255,255,255,.25) !important;
+  background:rgba(255,255,255,.20) !important;
 }
 [data-testid="stSidebar"] .stSlider > div > div > div > div{
-  background:#ffffff !important;
+  background:#E02424 !important;
 }
 
 /* ── Sidebar divider ── */
@@ -148,10 +146,14 @@ html,body,[class*="css"]{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont
 [data-testid="stSidebar"] ::-webkit-scrollbar-track{background:rgba(255,255,255,.08);}
 [data-testid="stSidebar"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:4px;}
 
-/* ── Logo: force white SVG paths ── */
-[data-testid="stSidebar"] svg path{fill:#ffffff !important;stroke:#ffffff !important;}
+/* ── Logo: crisp white with glow — highly visible on blue ── */
+[data-testid="stSidebar"] svg path{fill:#ffffff !important;stroke:none !important;}
+[data-testid="stSidebar"] svg circle{fill:#ffffff !important;stroke:none !important;}
+[data-testid="stSidebar"] svg rect{fill:#ffffff !important;stroke:none !important;}
 [data-testid="stSidebar"] svg *{fill:#ffffff !important;stroke:none !important;}
-[data-testid="stSidebar"] img{filter:brightness(0) invert(1) !important;}
+[data-testid="stSidebar"] img{
+  filter:brightness(0) invert(1) drop-shadow(0 0 6px rgba(255,255,255,0.8)) !important;
+}
 
 /* ── Hide GitHub button, share menu, toolbar, footer ────────────────── */
 #MainMenu                         {visibility:hidden !important;display:none !important;}
@@ -285,13 +287,24 @@ def logo_header(subtitle):
     p = "ARCLogo_Blue.svg"
     if os.path.exists(p):
         with open(p) as f:
-            svg = f.read()
-        logo_el = '<div style="height:36px;width:auto;">' + svg + '</div>'
+            raw_svg = f.read()
+        # Force all SVG elements white + add drop-shadow filter for visibility
+        white_svg = raw_svg.replace('fill="#', 'fill="#FFFFFF" data-orig="').replace(
+            "fill='#", "fill='#FFFFFF' data-orig='"
+        )
+        # Simpler approach: wrap in a styled div that applies CSS filter
+        logo_el = (
+            '<div style="height:44px;width:auto;'
+            'filter:brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.9));'
+            'display:flex;align-items:center;">'
+            + raw_svg +
+            '</div>'
+        )
     else:
         logo_el = (
-            '<div style="background:' + ACCENT + ';color:#fff;font-weight:900;'
-            'font-size:.92rem;padding:6px 13px;border-radius:7px;'
-            'letter-spacing:.04em;">ARC</div>'
+            '<div style="background:rgba(255,255,255,0.2);color:#fff;font-weight:900;'
+            'font-size:1rem;padding:7px 14px;border-radius:8px;'
+            'letter-spacing:.04em;border:2px solid rgba(255,255,255,.5);">ARC</div>'
         )
     st.markdown(
         '<div style="display:flex;align-items:center;gap:12px;'
