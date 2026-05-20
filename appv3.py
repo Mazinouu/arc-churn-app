@@ -9,6 +9,14 @@ import pandas as pd
 import plotly.graph_objects as go
 import numpy as np
 
+# ── pandas Styler compatibility (applymap renamed to map in pandas 2.1+) ──
+def _styler_map(styler, fn, subset):
+    """Works on pandas < 2.1 and >= 2.1"""
+    try:
+        return styler.map(fn, subset=subset)        # pandas >= 2.1
+    except AttributeError:
+        return styler.applymap(fn, subset=subset)   # pandas < 2.1
+
 # ──────────────────────────────────────────────
 # PAGE CONFIG  (first Streamlit call)
 # ──────────────────────────────────────────────
@@ -510,8 +518,8 @@ def tab_registry(df):
 
     styled = (
         disp.style
-        .applymap(_ts, subset=["Risk_Tier"])
-        .applymap(_ss, subset=["Churn_Score"])
+        .pipe(_styler_map, _ts, subset=["Risk_Tier"])
+        .pipe(_styler_map, _ss, subset=["Churn_Score"])
         .set_properties(**{"font-size":"0.8rem"})
     )
     st.dataframe(styled, use_container_width=True, height=500)
@@ -1028,7 +1036,7 @@ def tab_rm(df):
         return "background-color:{};color:{};font-weight:700;".format(
             TIER_LT.get(v,"#eee"), TIER_C.get(v,TEXT))
 
-    st.dataframe(rm_d.style.applymap(_ts, subset=["Risk_Tier"]),
+    st.dataframe(_styler_map(rm_d.style, _ts, subset=["Risk_Tier"]),
                  use_container_width=True, height=430)
 
     csv_rm = (
