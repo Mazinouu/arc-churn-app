@@ -169,6 +169,15 @@ button[title="View app source"]   {visibility:hidden !important;display:none !im
 button[title="Share this app"]    {visibility:hidden !important;display:none !important;}
 button[title="Open settings"]     {visibility:hidden !important;display:none !important;}
 
+/* ── Hide Streamlit "Manage app" bottom-right button ── */
+[data-testid="manage-app-button"]  {visibility:hidden !important;display:none !important;}
+[data-testid="stBottom"]           {visibility:hidden !important;display:none !important;}
+[class*="statusWidget"]            {visibility:hidden !important;display:none !important;}
+[class*="viewerBadge"]             {visibility:hidden !important;display:none !important;}
+[class*="manageApp"]               {visibility:hidden !important;display:none !important;}
+.st-emotion-cache-1dp5vir          {visibility:hidden !important;display:none !important;}
+iframe[title="st_app_chrome"]      {visibility:hidden !important;display:none !important;}
+
 /* ── Scoring legend: force vivid tier colours — must beat the * rule ── */
 .score-legend-crit{color:#FF4444 !important;font-weight:700 !important;}
 .score-legend-high{color:#F5C400 !important;font-weight:700 !important;}
