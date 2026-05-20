@@ -92,6 +92,20 @@ html,body,[class*="css"]{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont
 [data-testid="stSidebar"] ::-webkit-scrollbar-track{background:rgba(255,255,255,.1);}
 [data-testid="stSidebar"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.35);border-radius:4px;}
 
+/* ── Hide GitHub button, share menu, toolbar, footer ────────────────── */
+#MainMenu                         {visibility:hidden !important;display:none !important;}
+header[data-testid="stHeader"]    {visibility:hidden !important;display:none !important;}
+footer                            {visibility:hidden !important;display:none !important;}
+[data-testid="stToolbar"]         {visibility:hidden !important;display:none !important;}
+[data-testid="stDecoration"]      {visibility:hidden !important;display:none !important;}
+[data-testid="stStatusWidget"]    {visibility:hidden !important;display:none !important;}
+[data-testid="baseButton-header"] {visibility:hidden !important;display:none !important;}
+.stActionButton                   {visibility:hidden !important;display:none !important;}
+a[href*="github"]                 {visibility:hidden !important;display:none !important;}
+button[title="View app source"]   {visibility:hidden !important;display:none !important;}
+button[title="Share this app"]    {visibility:hidden !important;display:none !important;}
+button[title="Open settings"]     {visibility:hidden !important;display:none !important;}
+
 /* ── Scoring legend: force vivid tier colours — must beat the * rule ── */
 .score-legend-crit{color:#FF4444 !important;font-weight:700 !important;}
 .score-legend-high{color:#F5C400 !important;font-weight:700 !important;}
