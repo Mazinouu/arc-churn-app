@@ -27,12 +27,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Inject viewport meta for proper mobile scaling
-st.markdown(
-    '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">',
-    unsafe_allow_html=True,
-)
-
 # ──────────────────────────────────────────────
 # PALETTE
 # ──────────────────────────────────────────────
@@ -74,89 +68,85 @@ def _rgba(h, a):
 # ──────────────────────────────────────────────
 st.markdown("""
 <style>
-/* ════════════════════════════════════════════════════
-   BASE — applies to all screen sizes
-   ════════════════════════════════════════════════════ */
-html,body,[class*="css"]{
-  font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;
-  -webkit-text-size-adjust:100%;
-}
+html,body,[class*="css"]{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;}
 
-/* Fluid main container */
-.main .block-container{
-  padding-top:1.2rem;
-  padding-bottom:2rem;
-  padding-left:1rem;
-  padding-right:1rem;
-  max-width:100% !important;
-  width:100% !important;
-}
-
-/* All images and iframes scale inside their containers */
-img, iframe, video { max-width:100%; height:auto; }
-
-/* Plotly charts: always fill their column */
-.js-plotly-plot, .plotly, .plot-container { width:100% !important; }
-
-/* ════════════════════════════════════════════════════
-   SIDEBAR — rich blue gradient
-   ════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════
+   SIDEBAR — rich blue, fully styled
+   ════════════════════════════════════════════ */
 [data-testid="stSidebar"]{
   background: linear-gradient(170deg,#0e3fa8 0%,#1A56DB 55%,#1d62f0 100%) !important;
-  min-width:220px !important;
-  max-width:260px !important;
 }
+
+/* All text white by default */
 [data-testid="stSidebar"] *{color:#ffffff !important;}
 [data-testid="stSidebar"] h1,
 [data-testid="stSidebar"] h2,
 [data-testid="stSidebar"] h3{color:#ffffff !important;font-weight:700 !important;}
+
+/* Filter labels */
 [data-testid="stSidebar"] label{
   color:rgba(255,255,255,0.70) !important;
-  font-size:.68rem !important;text-transform:uppercase;
-  letter-spacing:.08em;font-weight:700 !important;
+  font-size:.68rem !important;text-transform:uppercase;letter-spacing:.08em;
+  font-weight:700 !important;
 }
 
-/* Selectbox */
+/* ── Selectbox: white background, dark text ── */
 [data-testid="stSidebar"] [data-baseweb="select"] > div:first-child{
-  background:#ffffff !important;border:none !important;
-  border-radius:8px !important;box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
+  background:#ffffff !important;
+  border:none !important;
+  border-radius:8px !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
 }
 [data-testid="stSidebar"] [data-baseweb="select"] *{color:#111928 !important;}
 [data-testid="stSidebar"] [data-baseweb="select"] svg{color:#1A56DB !important;}
 
-/* Multiselect */
+/* ── Multiselect: white background container ── */
 [data-testid="stSidebar"] [data-baseweb="select"][aria-multiselectable="true"] > div,
 [data-testid="stSidebar"] .stMultiSelect > div > div{
-  background:#ffffff !important;border:none !important;
-  border-radius:8px !important;box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
+  background:#ffffff !important;
+  border:none !important;
+  border-radius:8px !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
 }
+/* ── Multiselect tags: CRITICAL RED (#E02424) ── */
 [data-testid="stSidebar"] [data-baseweb="tag"]{
-  background:#E02424 !important;border-radius:6px !important;border:none !important;
+  background:#E02424 !important;
+  border-radius:6px !important;
+  border:none !important;
 }
 [data-testid="stSidebar"] [data-baseweb="tag"] span{color:#ffffff !important;font-weight:700 !important;}
 [data-testid="stSidebar"] [data-baseweb="tag"] svg{color:#ffffff !important;opacity:.9;}
 [data-testid="stSidebar"] [data-baseweb="tag"][style*="rgb"]{background:#E02424 !important;}
 
-/* Slider */
+/* ── Slider: RED fill (#E02424) matching Critical colour ── */
 [data-testid="stSidebar"] .stSlider > div{padding:0 !important;}
 [data-testid="stSidebar"] .stSlider [data-testid="stTickBarMin"],
 [data-testid="stSidebar"] .stSlider [data-testid="stTickBarMax"],
 [data-testid="stSidebar"] .stSlider [data-testid="stSliderThumbValue"]{
   color:rgba(255,255,255,0.90) !important;font-size:.72rem !important;font-weight:600 !important;
 }
+/* Slider thumb: red circle */
 [data-testid="stSidebar"] [data-testid="stSlider"] div[role="slider"]{
-  background:#E02424 !important;box-shadow:0 0 0 4px rgba(224,36,36,.35) !important;
+  background:#E02424 !important;
+  box-shadow:0 0 0 4px rgba(224,36,36,.35) !important;
 }
-[data-testid="stSidebar"] .stSlider > div > div > div{background:rgba(255,255,255,.20) !important;}
-[data-testid="stSidebar"] .stSlider > div > div > div > div{background:#E02424 !important;}
+/* Slider active track fill: red */
+[data-testid="stSidebar"] .stSlider > div > div > div{
+  background:rgba(255,255,255,.20) !important;
+}
+[data-testid="stSidebar"] .stSlider > div > div > div > div{
+  background:#E02424 !important;
+}
 
-/* Divider & scrollbar */
+/* ── Sidebar divider ── */
 [data-testid="stSidebar"] hr{border-color:rgba(255,255,255,0.18) !important;}
+
+/* ── Sidebar scrollbar ── */
 [data-testid="stSidebar"] ::-webkit-scrollbar{width:4px;}
 [data-testid="stSidebar"] ::-webkit-scrollbar-track{background:rgba(255,255,255,.08);}
 [data-testid="stSidebar"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:4px;}
 
-/* Logo white + glow */
+/* ── Logo: crisp white with glow — highly visible on blue ── */
 [data-testid="stSidebar"] svg path{fill:#ffffff !important;stroke:none !important;}
 [data-testid="stSidebar"] svg circle{fill:#ffffff !important;stroke:none !important;}
 [data-testid="stSidebar"] svg rect{fill:#ffffff !important;stroke:none !important;}
@@ -165,40 +155,38 @@ img, iframe, video { max-width:100%; height:auto; }
   filter:brightness(0) invert(1) drop-shadow(0 0 6px rgba(255,255,255,0.8)) !important;
 }
 
-/* ════════════════════════════════════════════════════
-   HIDE STREAMLIT CHROME
-   ════════════════════════════════════════════════════ */
-#MainMenu,header[data-testid="stHeader"],footer,
-[data-testid="stToolbar"],[data-testid="stDecoration"],
-[data-testid="stStatusWidget"],[data-testid="baseButton-header"],
-.stActionButton,a[href*="github"],
-button[title="View app source"],button[title="Share this app"],
-button[title="Open settings"],
-[data-testid="manage-app-button"],[data-testid="stBottom"],
-[class*="statusWidget"],[class*="viewerBadge"],[class*="manageApp"],
-.st-emotion-cache-1dp5vir,iframe[title="st_app_chrome"]{
-  visibility:hidden !important;display:none !important;
-}
+/* ── Hide GitHub button, share menu, toolbar, footer ────────────────── */
+#MainMenu                         {visibility:hidden !important;display:none !important;}
+header[data-testid="stHeader"]    {visibility:hidden !important;display:none !important;}
+footer                            {visibility:hidden !important;display:none !important;}
+[data-testid="stToolbar"]         {visibility:hidden !important;display:none !important;}
+[data-testid="stDecoration"]      {visibility:hidden !important;display:none !important;}
+[data-testid="stStatusWidget"]    {visibility:hidden !important;display:none !important;}
+[data-testid="baseButton-header"] {visibility:hidden !important;display:none !important;}
+.stActionButton                   {visibility:hidden !important;display:none !important;}
+a[href*="github"]                 {visibility:hidden !important;display:none !important;}
+button[title="View app source"]   {visibility:hidden !important;display:none !important;}
+button[title="Share this app"]    {visibility:hidden !important;display:none !important;}
+button[title="Open settings"]     {visibility:hidden !important;display:none !important;}
 
-/* ════════════════════════════════════════════════════
-   SCORING LEGEND COLOURS (beat sidebar * override)
-   ════════════════════════════════════════════════════ */
+/* ── Hide Streamlit "Manage app" bottom-right button ── */
+[data-testid="manage-app-button"]  {visibility:hidden !important;display:none !important;}
+[data-testid="stBottom"]           {visibility:hidden !important;display:none !important;}
+[class*="statusWidget"]            {visibility:hidden !important;display:none !important;}
+[class*="viewerBadge"]             {visibility:hidden !important;display:none !important;}
+[class*="manageApp"]               {visibility:hidden !important;display:none !important;}
+.st-emotion-cache-1dp5vir          {visibility:hidden !important;display:none !important;}
+iframe[title="st_app_chrome"]      {visibility:hidden !important;display:none !important;}
+
+/* ── Scoring legend: force vivid tier colours — must beat the * rule ── */
 .score-legend-crit{color:#FF4444 !important;font-weight:700 !important;}
 .score-legend-high{color:#F5C400 !important;font-weight:700 !important;}
 .score-legend-med {color:#C084FC !important;font-weight:700 !important;}
 .score-legend-low {color:#34D399 !important;font-weight:700 !important;}
-
-/* ════════════════════════════════════════════════════
-   COMPONENT STYLES
-   ════════════════════════════════════════════════════ */
-.kpi{
-  background:#fff;border-radius:12px;
-  padding:1rem 1.2rem .9rem;
-  border:1px solid #E5E7EB;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);
-  transition:transform .15s,box-shadow .15s;
-  height:100%;
-}
+.main .block-container{padding-top:1.4rem;padding-bottom:2rem;}
+.kpi{background:#fff;border-radius:12px;padding:1rem 1.2rem .9rem;
+  border:1px solid #E5E7EB;box-shadow:0 2px 8px rgba(0,0,0,.05);
+  transition:transform .15s,box-shadow .15s;height:100%;}
 .kpi:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
 .kpi-lbl{font-size:.67rem;font-weight:700;text-transform:uppercase;
   letter-spacing:.07em;color:#6B7280;margin-bottom:.22rem;}
@@ -208,10 +196,9 @@ button[title="Open settings"],
   letter-spacing:.05em;color:#111928;
   border-left:3px solid #1A56DB;padding-left:.5rem;margin:.1rem 0 .5rem;}
 .stTabs [data-baseweb="tab-list"]{gap:3px;background:#fff;
-  border-radius:10px;padding:4px;border:1px solid #E5E7EB;
-  flex-wrap:wrap;}
+  border-radius:10px;padding:4px;border:1px solid #E5E7EB;}
 .stTabs [data-baseweb="tab"]{border-radius:7px;padding:.38rem .9rem;
-  font-weight:600;font-size:.8rem;color:#6B7280;white-space:nowrap;}
+  font-weight:600;font-size:.8rem;color:#6B7280;}
 .stTabs [aria-selected="true"]{background:#1A56DB !important;color:#fff !important;}
 .pill{display:inline-block;padding:2px 10px;border-radius:20px;
   font-size:.7rem;font-weight:700;margin:2px 2px;}
@@ -220,124 +207,8 @@ button[title="Open settings"],
 .sb-fill{height:8px;border-radius:5px;}
 .callout{border-radius:10px;padding:.72rem 1rem;font-size:.82rem;margin-bottom:.8rem;}
 .arc-hr{border:none;border-top:1px solid #E5E7EB;margin:.75rem 0 .9rem;}
-.stDataFrame{border-radius:10px;overflow:hidden;width:100% !important;}
-.stDataFrame > div{overflow-x:auto;}
-
-/* Columns: allow wrapping on small screens */
-[data-testid="column"]{min-width:0;}
-
-/* ════════════════════════════════════════════════════
-   DESKTOP  ≥ 1200px  — full layout, comfortable spacing
-   ════════════════════════════════════════════════════ */
-@media (min-width:1200px){
-  .main .block-container{padding-left:2rem;padding-right:2rem;}
-  .kpi-val{font-size:1.85rem;}
-  .kpi-lbl{font-size:.67rem;}
-  .sec{font-size:.8rem;}
-  .stTabs [data-baseweb="tab"]{font-size:.8rem;padding:.38rem .9rem;}
-}
-
-/* ════════════════════════════════════════════════════
-   LAPTOP  1025px – 1199px  — slightly tighter
-   ════════════════════════════════════════════════════ */
-@media (min-width:1025px) and (max-width:1199px){
-  .main .block-container{padding-left:1.2rem;padding-right:1.2rem;}
-  .kpi-val{font-size:1.6rem;}
-  .kpi{padding:.85rem 1rem .8rem;}
-  .stTabs [data-baseweb="tab"]{font-size:.75rem;padding:.35rem .7rem;}
-}
-
-/* ════════════════════════════════════════════════════
-   TABLET  768px – 1024px  — collapse KPI row to 3+2,
-   stack some chart pairs
-   ════════════════════════════════════════════════════ */
-@media (min-width:768px) and (max-width:1024px){
-  .main .block-container{padding-left:1rem;padding-right:1rem;}
-
-  /* KPI cards: 3 per row then 2 */
-  .kpi-val{font-size:1.4rem;}
-  .kpi-lbl{font-size:.63rem;}
-  .kpi{padding:.75rem .9rem .7rem;}
-  .kpi-sub{font-size:.65rem;}
-
-  /* Tabs wrap to 2 rows comfortably */
-  .stTabs [data-baseweb="tab-list"]{flex-wrap:wrap;gap:4px;}
-  .stTabs [data-baseweb="tab"]{font-size:.72rem;padding:.32rem .65rem;}
-
-  /* Section titles slightly smaller */
-  .sec{font-size:.74rem;}
-
-  /* Sidebar narrower on tablet */
-  [data-testid="stSidebar"]{min-width:200px !important;max-width:220px !important;}
-  [data-testid="stSidebar"] label{font-size:.62rem !important;}
-}
-
-/* ════════════════════════════════════════════════════
-   MOBILE  ≤ 767px  — full single-column, large tap targets
-   ════════════════════════════════════════════════════ */
-@media (max-width:767px){
-  .main .block-container{
-    padding-left:.6rem !important;
-    padding-right:.6rem !important;
-    padding-top:.8rem !important;
-  }
-
-  /* KPI cards: single column, larger text for readability */
-  .kpi-val{font-size:1.55rem;}
-  .kpi-lbl{font-size:.65rem;}
-  .kpi{padding:.8rem 1rem .75rem;border-radius:10px;}
-  .kpi-sub{font-size:.67rem;}
-
-  /* Charts fill full width — Streamlit columns stack automatically */
-  .element-container,.stPlotlyChart{width:100% !important;}
-  .js-plotly-plot .plotly{width:100% !important;}
-
-  /* Tabs: wrap & shrink for narrow screens */
-  .stTabs [data-baseweb="tab-list"]{
-    flex-wrap:wrap;gap:3px;padding:3px;
-  }
-  .stTabs [data-baseweb="tab"]{
-    font-size:.68rem;padding:.3rem .55rem;border-radius:6px;
-  }
-
-  /* Section titles */
-  .sec{font-size:.72rem;letter-spacing:.03em;}
-
-  /* Callout boxes */
-  .callout{font-size:.78rem;padding:.65rem .85rem;}
-
-  /* Pills smaller */
-  .pill{font-size:.65rem;padding:2px 8px;}
-
-  /* Sidebar: full-width overlay on mobile (Streamlit default behaviour) */
-  [data-testid="stSidebar"]{
-    min-width:80vw !important;
-    max-width:88vw !important;
-  }
-
-  /* Dataframe: horizontal scroll on mobile */
-  .stDataFrame > div{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-
-  /* Page header logo area */
-  .page-hdr-title{font-size:.95rem !important;}
-  .page-hdr-sub{font-size:.63rem !important;}
-
-  /* Score bar */
-  .sb-wrap{height:10px;}
-  .sb-fill{height:10px;}
-}
-
-/* ════════════════════════════════════════════════════
-   SMALL MOBILE  ≤ 400px  — compact everything further
-   ════════════════════════════════════════════════════ */
-@media (max-width:400px){
-  .main .block-container{padding-left:.4rem !important;padding-right:.4rem !important;}
-  .kpi-val{font-size:1.3rem;}
-  .kpi{padding:.7rem .8rem .65rem;}
-  .stTabs [data-baseweb="tab"]{font-size:.62rem;padding:.28rem .45rem;}
-  .sec{font-size:.68rem;}
-  .kpi-lbl{font-size:.6rem;}
-}
+footer{visibility:hidden;}
+.stDataFrame{border-radius:10px;overflow:hidden;}
 </style>
 """, unsafe_allow_html=True)
 
