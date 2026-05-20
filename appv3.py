@@ -70,27 +70,88 @@ st.markdown("""
 <style>
 html,body,[class*="css"]{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;}
 
-/* ── Sidebar: bright blue gradient ── */
+/* ════════════════════════════════════════════
+   SIDEBAR — rich blue, fully styled
+   ════════════════════════════════════════════ */
 [data-testid="stSidebar"]{
-  background: linear-gradient(180deg, #1648C0 0%, #1A56DB 40%, #1d62f0 100%) !important;
+  background: linear-gradient(170deg,#0e3fa8 0%,#1A56DB 55%,#1d62f0 100%) !important;
 }
-/* Default text: white on blue */
+
+/* All text white by default */
 [data-testid="stSidebar"] *{color:#ffffff !important;}
-[data-testid="stSidebar"] h1,[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
 [data-testid="stSidebar"] h3{color:#ffffff !important;font-weight:700 !important;}
+
+/* Filter labels */
 [data-testid="stSidebar"] label{
-  color:rgba(255,255,255,0.75) !important;
-  font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;
+  color:rgba(255,255,255,0.60) !important;
+  font-size:.68rem !important;text-transform:uppercase;letter-spacing:.08em;
+  font-weight:700 !important;
 }
-/* Selectbox / multiselect / slider widgets: readable on blue */
-[data-testid="stSidebar"] [data-baseweb="select"] *,
-[data-testid="stSidebar"] [data-baseweb="input"] *{color:#111928 !important;}
-[data-testid="stSidebar"] .stSlider *{color:#ffffff !important;}
-/* Divider colour */
-[data-testid="stSidebar"] hr{border-color:rgba(255,255,255,0.25) !important;}
-/* Sidebar scrollbar */
-[data-testid="stSidebar"] ::-webkit-scrollbar-track{background:rgba(255,255,255,.1);}
-[data-testid="stSidebar"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.35);border-radius:4px;}
+
+/* ── Selectbox: white background, dark text ── */
+[data-testid="stSidebar"] [data-baseweb="select"] > div:first-child{
+  background:#ffffff !important;
+  border:none !important;
+  border-radius:8px !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
+}
+[data-testid="stSidebar"] [data-baseweb="select"] *{color:#111928 !important;}
+[data-testid="stSidebar"] [data-baseweb="select"] svg{color:#1A56DB !important;}
+
+/* ── Multiselect: white background container ── */
+[data-testid="stSidebar"] [data-baseweb="select"][aria-multiselectable="true"] > div,
+[data-testid="stSidebar"] .stMultiSelect > div > div{
+  background:#ffffff !important;
+  border:none !important;
+  border-radius:8px !important;
+  box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
+}
+/* Multiselect tags: blue pill on white bg */
+[data-testid="stSidebar"] [data-baseweb="tag"]{
+  background:#1A56DB !important;
+  border-radius:6px !important;
+  border:none !important;
+}
+[data-testid="stSidebar"] [data-baseweb="tag"] span{color:#ffffff !important;font-weight:600 !important;}
+[data-testid="stSidebar"] [data-baseweb="tag"] svg{color:#ffffff !important;opacity:.85;}
+/* Remove the red default tag colour Streamlit applies */
+[data-testid="stSidebar"] [data-baseweb="tag"][style*="rgb(255"]{
+  background:#1A56DB !important;
+}
+
+/* ── Slider: white track accent, white labels ── */
+[data-testid="stSidebar"] .stSlider > div{padding:0 !important;}
+[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMin"],
+[data-testid="stSidebar"] .stSlider [data-testid="stTickBarMax"],
+[data-testid="stSidebar"] .stSlider [data-testid="stSliderThumbValue"]{
+  color:rgba(255,255,255,0.85) !important;font-size:.72rem !important;
+}
+/* Slider track fill: white */
+[data-testid="stSidebar"] [data-testid="stSlider"] div[role="slider"]{
+  background:#ffffff !important;
+  box-shadow:0 0 0 3px rgba(255,255,255,.35) !important;
+}
+[data-testid="stSidebar"] .stSlider > div > div > div{
+  background:rgba(255,255,255,.25) !important;
+}
+[data-testid="stSidebar"] .stSlider > div > div > div > div{
+  background:#ffffff !important;
+}
+
+/* ── Sidebar divider ── */
+[data-testid="stSidebar"] hr{border-color:rgba(255,255,255,0.18) !important;}
+
+/* ── Sidebar scrollbar ── */
+[data-testid="stSidebar"] ::-webkit-scrollbar{width:4px;}
+[data-testid="stSidebar"] ::-webkit-scrollbar-track{background:rgba(255,255,255,.08);}
+[data-testid="stSidebar"] ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:4px;}
+
+/* ── Logo: force white SVG paths ── */
+[data-testid="stSidebar"] svg path{fill:#ffffff !important;stroke:#ffffff !important;}
+[data-testid="stSidebar"] svg *{fill:#ffffff !important;stroke:none !important;}
+[data-testid="stSidebar"] img{filter:brightness(0) invert(1) !important;}
 
 /* ── Hide GitHub button, share menu, toolbar, footer ────────────────── */
 #MainMenu                         {visibility:hidden !important;display:none !important;}
